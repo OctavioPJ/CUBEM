@@ -1,0 +1,4 @@
+^^ LIBRARY = New100MW1g18.bib
+^^ SEC 8  GROUP from library
+^^ FUEL ELEMENT =  1 TO 40       KEY=S18_00_MEDIO
+^^ fission spec from library

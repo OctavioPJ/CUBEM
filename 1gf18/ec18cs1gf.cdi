@@ -1,0 +1,113 @@
+-DIR:/users/difra/mtr_pc/bib
+
+* elemento combustible 1.8% enrich, sin venenos
+* 12 barras absorbentes
+* Alexis junio 2014
+
+new case esinlib=ewlup069.bib
+def pitch=1.38
+define TFUEL=417+273, TCAN=350+273, TCOOL=308+273, TCROD=350+273, TH2OTG=305+273, TSEP=305+273, TACERO=350+273
+temp TFUEL TCOOL TCOOL TCAN TH2OTG TSEP TCROD TACERO; secuencia de temperatura
+********************************************************************************
+* Datos para el state tree sacados de 0758-1010-2IAKN-157-1O
+* Estado de operacion normal
+state tree STN / HOT /xskey=MEDIO /xstitle=VALOR CENTRAL
+* Variacion de TFUEL
+* El rango es entre T entrada=284 t T salida=1000, la T=700 se hace para una mejor interpolacion
+           TmaxF/TEMP <TFUELm=1000+273> TFUELm TCOOL TCOOL TCAN TH2OTG TSEP TCROD TACERO/xskey=TFMAX/xstitle=TFUELmax=1000 C
+           TmedF/TEMP <TFUELm=700+273> TFUELm TCOOL TCOOL TCAN TH2OTG TSEP TCROD TACERO/xskey=TF700/xstitle=TFUELmed=700 C
+           TminF/TEMP <TFUELm=284+273> TFUELm TCOOL TCOOL TCAN TH2OTG TSEP TCROD TACERO/xskey=TFMIN/xstitle=TFUELmin=284 C
+* Variacion de TCOOL;
+           TminR/TEMP TFUEL <TCOOLm=284+273> TCOOLm TCOOL TCAN TH2OTG TSEP TCROD TACERO/xskey=TRMIN/xstitle=TCOOLmin=284 C
+           TmaxR/TEMP TFUEL <TCOOLm=326+273> TCOOLm TCOOL TCAN TH2OTG TSEP TCROD TACERO/xskey=TRMAX/xstitle=TCOOLmax=326 C
+* Variacion de Densidad del Ref;
+           TnDmax/HOT=0.753 0.753 /xskey=DMAX/xstitle=Temp Op_Dens Ref Max
+           TnDmed/HOT=0.55 0.55/xskey=D550/xstitle=Temp Op_Dens Ref Med
+           TnDmin/HOT=0.4 0.4/xskey=DMIN/xstitle=Temp Op_Dens Ref Min
+* Con barras insertadas
+           STCR12 / HOT CONTROL=   C12   /XSKEY=AIC12 /XSTITLE=BARRAS CONTROL 12 AIC
+*           STCR18 / HOT CONTROL=C6 C12   /XSKEY=AIC18 /XSTITLE=BARRAS CONTROL 18 AIC
+********************************************************************************
+* Densidades numericas calculadas en  Composiciones-29-05-14.xls
+*
+* UO2 dens=9.991 g/cm3, enrich= 1.8% wt
+COMPOSITION  UO2   /TYPE=FUEL/nume 92234 4.0789E-06 92235 4.0615E-04 92238 2.1874E-02 ,
+                                    8000 4.4568E-02 5000 2.41196E-06   
+* Zircaloy 4 dens=6.6 g/cm3
+             ZRCLY/TYPE=Vaina/nume 24000 7.6441E-05 26000 1.4946E-04 8000 3.1053E-04 ,
+                                   50000 4.8548E-04 40000 4.2749E-02 5000 9.1786E-07 
+* H2O refrigerante dens=0.685 g/cm3 
+             H2O/TYPE=COOLANT/nume  1001 4.5796E-02 8000 2.2898E-02
+* H2O del tubo guia dens=0.685 g/cm3
+             H2OTG /TYPE=H2OTG/  nume  1001 4.5796E-02 8000 2.2898E-02
+* Zircaloy + Inconel del separador. Vol Zr=29.1cm3 , Vol Inc718= 9.61cm3
+             IncoZry/ TYPE=SEP / nume   8000 2.3343E-04 24000 4.5324E-03 ,
+                                       26000 3.9231E-03 50000 3.6494E-04 40000 3.2134E-02 ,
+                                        6000 4.0784E-05 25000 3.9009E-05 16000 2.8644E-06 ,
+                                       14000 7.6306E-05 28000 1.0954E-02 42000 3.8932E-04 ,
+                                       29000 2.8907E-05 13000 2.2694E-04 22000 2.3026E-04 ,
+                                       41000 6.7554E-04 27000 2.0780E-04   
+* Ag-In-Cd dens=10.17 g/cm3
+        AGINCD/TYPE=CROD/ nume 47000 4.5422E-02 49000 8.0012E-03 48000 2.7242E-03     
+* AGINCD/TYPE=CROD/ nume 47207 2.3546E-02 47209 2.1876E-02 49213 3.4325E-04 ,
+*                          49215 7.6579E-03 48206 3.4052E-05 48208 2.4245E-05 ,
+*                          48210 3.4025E-04 48211 3.4869E-04 48212 6.5734E-04 ,
+*                          48213 3.3289E-04 48214 7.8265E-04 48216 2.0404E-04 
+* en lugar de vacio se pone un poco de helio
+             GAP   /nume  2004 1e-15
+* AISI 304L dens=7.99 g/cm3
+             ACERO/ TYPE=ACERO /nume 6000 1.2019E-04 24000 1.7582E-02 26000 5.8607E-02 ,
+                                    25000 1.7517E-03 28000 8.1980E-03 14000 1.2849E-03 ,
+                                     7000 3.4353E-04 27000 8.1647E-05  5000 1.3352E-08 
+CONTROL ROD   C6 / CRODS6  4*AGINCD  GAP ACERO ;  6 dedos de control
+             C12 / CRODS12 4*AGINCD  GAP ACERO ; 12 dedos de control
+*********************************************************************************
+* dimensiones y materiales sacados de 0758-1010-3TAIN-156-1A
+PIN TYPE STD  / 0.3800 UO2  0.3875 GAP  0.4500 ZRCLY  0.4747 IncoZry ; BARRA COMBUSTIBLE STANDARD + (Zircaloy+Inconel) del separador
+        TGUIA / 0.54 H2OTG  0.60 ZRCLY ; TUBO GUIA BARRA DE CONTROL
+*         STDV / 0.3800 UO2VQ  0.3875 GAP  0.4500 ZRCLY  0.4747 IncoZry / mesh 5 ; BARRA COMBUSTIBLE STANDARD CON VQ + (Zircaloy+Inconel) del separador
+       CRODS6 / 0.35 H2OTG  0.36 H2OTG  0.425 H2OTG 0.54 H2OTG 0.6 ZRCLY / mesh 4 ; BARRA DE CONTROL
+      CRODS12 / 0.35 H2OTG  0.36 H2OTG  0.425 H2OTG 0.54 H2OTG 0.6 ZRCLY / mesh 4 ; BARRA DE CONTROL
+* DEFINICION DE LOS ANILLOS DE BARRAS
+PIN RING     1 /      0.0       0.0    1          ; BARRA CENTRAL
+             2 /      PITCH     0.0    6          ; 1A. CORONA
+             3 / P=6 <PITCH*2>  0.0   12          ; 2A. CORONA
+             4 / P=6 <PITCH*3>  0.0   18          ; 3A. CORONA
+             5 / P=6 <PITCH*4>  0.0   24          ; 4A. CORONA
+             6 / P=6 <PITCH*5>  0.0   30          ; 5A. CORONA
+             7 / P=6 <PITCH*6>  0.0   36          ; 6A. CORONA
+*
+* DEFINICION DE LA DISTRIBUCION DE BARRAS
+STANDARD PIN STD
+PIN OVERLAY  1 / 1(TGUIA)
+             3 / 6(CRODS6,STD)
+             6 / 6(STD,CRODS12,2*STD,CRODS12)
+COOLANT <PITCH*0.5+0.1> /POLYGON=6 0.0                           
+        <PITCH*1.5>     /POLYGON=6 0.0 30 60                     
+        <PITCH*2.5+0.1> /POLYGON=6 0.0 15 45 60                  
+        <PITCH*3.5>     /POLYGON=6 0.0 8.94 30 51.05 60.0         
+        <PITCH*4.5-0.1> /POLYGON=6 0.0 6.58 14 21.7 38.21 45.8 53.41 60.0    
+        <PITCH*5.5+0.1> /POLYGON=6 0.0 5.2 10.6 16.99 23.49 30 36.5 43 48.895 54.79 60
+        <PITCH*6.5>     /POLYGON=6 0.0 4.3 9 13.89 19.19 24.5 30,
+                               35.49 40.75 46.10 50.895 55.69 60.0
+*                                   
+* EL OUTSIDE PIN IGUAL QUE EL ULTIMO DE COOLANT
+OUTSIDE PIN  9.2376 H2O /POLYGON=6 0.0 4.3 9 13.89 19.19 24.5 30,
+                               35.49 40.75 46.10 50.895 55.69 60.0
+* con esta instruccion condensa las XS con el espectro a 69 grupos
+criticality library
+edit group 1 / energy = 0.0 ; estructura de condensacion a  grupo
+* quema hasta 40 000 MWd/Tn con pasos variables
+burnup step  0:12000:300 13000 15000 20000:40000:4000
+* densidad de potencia media calculada en Composiciones-3-4-09.xls
+core data  power = 27.2 ; [MW/Tn o W/g] 100MW/3.677 Tn de U
+#INCLUDE cadenas.chn
+edit region   1 /ALL
+edit isotopes 1 /ALL
+edit output 1 / xs_p0=s18_00_[]/xstitle=EC 1.8%. []. SIN VQ. con separador/GROUP=1
+edit output 2 / NUMERICAL_DENSITY/r=1/i=1
+edit output 3 / kinetic_parameter/g=1/r=1/i=1
+edit output 4 / CITATION=library_order/g=1/r=1/i=1
+list *
+READY
+END

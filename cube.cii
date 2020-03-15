@@ -1,0 +1,22 @@
+-m:7000000
+CAREM 25.   MAR 2014.
+ pruebas nucleo de equilibrio simetria 1
+^^ sec 1 NGC 6 1 itmx 1 900 itmx 19 to 24 999
+^^ sec 3 geo XYZ black abs 1999 power 100 epi 1 1.00E-08
+*
+******************* geometrical definition ************************
+^^ file cube.sc4
+^^ file cube.sc5
+********************* beginning of material data ***********************
+^^ file cube.mat
+999
+^^ calculate
+^^ Print Mesh Maps Always
+^^ calculate
+^^ backup restart file $DIR_TIME.rst
+^^ call save_mesh
+^^ end run
+^^ procedure save_mesh:
+^^ restart from file $DIR_TIME.rst
+^^ Calculate
+^^ END PROCEDURE
