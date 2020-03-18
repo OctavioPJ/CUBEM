@@ -1,0 +1,13 @@
+-m:7000000
+Modelo CITVAP-PYTHON ejecutado 2020-03-17 13:33:23.989303
+CAREM 25. March 2020
+^^ sec 1 NGC 2 0 itmx 1 900 itmx 19 to 24 999
+^^ sec 3 geo TZ black abs 1999 power 100
+^^ file cube.sc4
+^^ file cube.sc5
+^^ file cube.mat
+999
+^^ database update on file carem.cdb
+^^ print meshmap always
+^^ calculate 
+^^ end run
