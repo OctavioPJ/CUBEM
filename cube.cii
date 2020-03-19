@@ -10,13 +10,7 @@ CAREM 25.   MAR 2014.
 ********************* beginning of material data ***********************
 ^^ file cube.mat
 999
-^^ calculate
 ^^ Print Mesh Maps Always
 ^^ calculate
 ^^ backup restart file $DIR_TIME.rst
-^^ call save_mesh
 ^^ end run
-^^ procedure save_mesh:
-^^ restart from file $DIR_TIME.rst
-^^ Calculate
-^^ END PROCEDURE

@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CUBEM.iml" filepath="$PROJECT_DIR$/.idea/CUBEM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../CAREM/.idea/Carem.iml" filepath="$PROJECT_DIR$/../CAREM/.idea/Carem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Charm/.idea/Charm.iml" filepath="$PROJECT_DIR$/../Charm/.idea/Charm.iml" />
     </modules>
   </component>
 </project>

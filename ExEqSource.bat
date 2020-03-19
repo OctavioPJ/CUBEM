@@ -1,4 +1,4 @@
-
+@echo off
 for /f "tokens=1,2 delims=." %%a in ("%1") do (
 	set ROOT_FILE=%%a
 	set CII_EXTENTION=%%b
@@ -10,7 +10,7 @@ cd XSU_MOD
 neutyp_eq %ROOT_FILE%.XSU %EQ% > xsu_data_eq.dat
 cd .. 
 move XSU_MOD/%ROOT_FILE%.XSU .
-citvap0.exe %ROOT_FILE%.cii -SCREEN
-copy %ROOT_FILE%.cdb %ROOT_FILE%_eq.cdb
+cittrs.exe %ROOT_FILE%.cii -SCREEN
+copy /Y %ROOT_FILE%.cdb %ROOT_FILE%_eq.cdb
 caremdb -opt:export -val:meshflux %ROOT_FILE%_eq.cdb
 goto :EOF

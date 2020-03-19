@@ -220,7 +220,7 @@ for group in range(Flux.shape[-1]):
                 for nz in range(Flux.shape[3]):
                     _Lmk= LmkM[state][nx][ny][nz]
                     _C  = C[state][nx][ny][nz]
-                    #Q[state][nx][ny][nz] = sum([ _Lmk[prc]*_C[prc] for prc in range(NPRC)])
+                    #_Q[state][nx][ny][nz] = sum([ _Lmk[prc]*_C[prc] for prc in range(NPRC)])
                     #de la fuente for dummies
                     Q[group][state][nx][ny][nz] = chi_g[group]*Precs[state,nx,ny,nz]
 Q
