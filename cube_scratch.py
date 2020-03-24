@@ -1,7 +1,7 @@
 import re
 import numpy as np
 from glob import glob
-from Cube import Charm
+from GitCharm.Charm.Cube import Charm
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':

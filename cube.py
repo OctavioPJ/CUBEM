@@ -34,7 +34,7 @@ class Nu_Fission_Map(CUBE_MAP):
 
         wdir = getattr(self, '_wdir')
         self._FISS = LoadCDP(wdir + 'ec18cs1gf.cdp')
-        self._NULL = {'XS': np.zeros(self._FISS[1][0.0]['XS'].shape), \
+        self._NULL = {'XS': np.zeros(self._FISS[1][0.0]['XS'].shape),
                       'SM': np.zeros(self._FISS[1][0.0]['SM'].shape)}
 
 

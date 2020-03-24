@@ -17,14 +17,24 @@ from citvappru.SourceCAREM2_1_1 import Geometry
 import re
 import subprocess
 import time
-
+from abc import ABC, abstractmethod
 BLACKABSORBER = 1999
 DEFAULT_STATE = 1
 DEFAULT_BURNUP = 0
 
 
-class CUBE_MAP(object):
+class CUBE_MAP(ABC):
     _wdir = 'C:\\CUBEM\\'
+
+    @property
+    @abstractmethod
+    def _NULL(self):
+        return
+
+    @property
+    @abstractmethod
+    def _FISS(self):
+        return
 
     def MapMaterial(self, meshmaterial, **kwargs):
         if meshmaterial == BLACKABSORBER:
@@ -33,6 +43,25 @@ class CUBE_MAP(object):
 
 
 class Nu_Fission_Map(CUBE_MAP):
+    @property
+    def _NULL(self):
+        return self._NULL
+
+    @property
+    def _FISS(self):
+        return self._FISS
+
+    @_NULL.setter
+    def _NULL(self, NewDict):
+        assert isinstance(NewDict, dict)
+        self._NULL = NewDict
+        return
+
+    @_FISS.setter
+    def _FISS(self, NewValue):
+        assert isinstance(NewValue, dict)
+        self._FISS = NewValue
+
     def __init__(self, **kwargs):
         if 'wdir' in kwargs:
             setattr(self, '_wdir', kwargs['wdir'])
@@ -44,6 +73,25 @@ class Nu_Fission_Map(CUBE_MAP):
 
 
 class Kinetic_Map(CUBE_MAP):
+    @property
+    def _NULL(self):
+        return self._NULL
+
+    @property
+    def _FISS(self):
+        return self._FISS
+
+    @_NULL.setter
+    def _NULL(self, NewDict):
+        assert isinstance(NewDict, dict)
+        self._NULL = NewDict
+        return
+
+    @_FISS.setter
+    def _FISS(self, NewValue):
+        assert isinstance(NewValue, dict)
+        self._FISS = NewValue
+
     def __init__(self, **kwargs):
         if 'wdir' in kwargs:
             setattr(self, '_wdir', kwargs['wdir'])
@@ -323,7 +371,7 @@ if __name__ == '__main__':
     N = 100
     UseDerivative = True
     # for N in np.logspace(1, 5, dtype=int):
-    for N in np.logspace(3, 5, dtype=int, num=10)[2:]: # N = 4641
+    for N in np.logspace(3, 5, dtype=int, num=10)[2:]:  # N = 4641
         Cube = CubeModel(UseDerivative=UseDerivative)
         dt = tfinal/N
         Times = []
